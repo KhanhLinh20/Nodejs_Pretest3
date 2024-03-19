@@ -1,0 +1,26 @@
+extends ../layout.pug
+
+block content
+    h1.text-center UPDATE
+    .col-md-6.offset-md-3
+        form(action=`/subject/updatePost/${updateSubject._id}` method='post' enctype='multipart/form-data')
+            .form-group.mb-3
+                label(for='subjectID') Subject ID
+                input#subjectID.form-control(name='subjectID' value=`${updateSubject.subjectID}` readonly disabled)
+            .form-group.mb-3
+                label(for='subjectName') Subject Name
+                input#subjectName.form-control(name='subjectName' value=`${updateSubject.subjectName}`)
+            .form-group.mb-3
+                label(for='subjectPrice') Subject Price
+                input#subjectPrice.form-control(name='subjectPrice', type='number' value=`${updateSubject.subjectPrice}`)
+            .form-group.mb-3
+                label(for='subjectHours') Subject Hours
+                input#subjectPrice.form-control(name='subjectHours', type='number' value=`${updateSubject.subjectHours}`)
+            .form-group.mb-3
+                label(for='image') Image
+                input#image.form-control(name='image', type='file' value=`${updateSubject.image}`)
+            if updateSubject.image != undefined 
+                img.mb-3.col-md-12(src=`/images/${updateSubject.image}`, style="height:auto;")
+            .col-md-12.d-flex.justify-content-between
+                a.btn.btn-secondary(href="/subject") BACK
+                input.btn.btn-success(type='submit', value='UPDATE')

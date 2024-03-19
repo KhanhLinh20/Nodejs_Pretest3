@@ -1,0 +1,27 @@
+extends ../layout.pug
+
+block content
+    h1.text-center CREATE NEW SUBJECT
+    .col-md-6.offset-md-3
+        form(action="/subject/createPost" method='post' enctype='multipart/form-data')
+            .form-group.mb-3
+                label(for='subjectID') Subject ID
+                input#subjectID.form-control(name='subjectID' oninput="formatId(this.value)")
+                p(style= 'color: red;')= message
+                p#errID(style= 'color: red;')
+            .form-group.mb-3
+                label(for='subjectName') Subject Name
+                input#subjectName.form-control(name='subjectName')
+            .form-group.mb-3
+                label(for='subjectPrice') Subject Price
+                input#subjectPrice.form-control(name='subjectPrice', type='number')
+            .form-group.mb-3
+                label(for='subjectHours') Subject Hours
+                input#subjectPrice.form-control(name='subjectHours', type='number')
+            .form-group.mb-3
+                label(for='image') Image
+                input#image.form-control(name='image', type='file')
+            .col-md-12.d-flex.justify-content-between
+                a.btn.btn-secondary(href="/") BACK
+                input.btn.btn-success(type='submit', value='CREATE')
+    script(src='/javascripts/validate.js')

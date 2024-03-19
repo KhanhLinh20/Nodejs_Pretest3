@@ -1,0 +1,68 @@
+extends ../layout.pug
+
+block content
+    a.btn.btn-primary.mb-3(href="/subject/create") Add New Subject
+    .row
+        .col-md-4
+        form(action='/subject/search')
+            |Search Name
+            .d-flex.justify-content-between
+            input.form-control.mr-3(name='subjectName')
+            input.btn.btn-primary(type="submit" value="Search")
+            button.btn.btn-secondary(type="button" onclick="window.location='/subject'") Reset
+        .col-md-4
+        form(action='/subject/searchPrice')
+            .d-flex.justify-content-between
+            |From
+            input.form-control(name='minPrice')
+            |To
+            input.form-control(name='maxPrice')
+            input.btn.btn-primary(type="submit" value="Search Price")
+            button.btn.btn-secondary(type="button" onclick="window.location='/'") Reset
+    h1.text-center Danh Sách Môn Học
+    div
+        a.btn.btn-warning.mb-3(href="/subject/sortPriceLowToHigh") Sort Price (Low to High)
+    div 
+        a.btn.btn-warning.mb-3(href="/subject/sortPriceHighToLow") Sort Price (High to Low)
+    div 
+        a.btn.btn-warning.mb-3(href="/subject/sortByName") Sort Name (A-Z)
+    table.table
+        thead.thead-dark
+        tr
+            th _id
+            th Subject ID 
+            th Subject Name
+            th Subject Price
+            th Subject Hour
+            th Image
+            th Action
+        tbody
+        if messageSearch
+            tr
+            td(colspan="8")
+                h4.text-center(style= 'color: red;')= messageSearch
+        else
+            each item in subjects
+                tr
+                    td= item._id
+                    td= item.subjectID
+                    td= item.subjectName
+                    td= item.subjectPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
+                    td= item.subjectHours
+                    td
+                        img(src=`/images/${item.image}` style="width:100px;height:auto")
+                    td.d-flex.justify-content-around.align-self-center
+                        a.btn.btn-warning(href=`/subject/update/${item._id}`) Update
+                        a.btn.btn-danger(href=`/subject/delete/${item._id}` onclick="return confirmDelete()") Delete
+        if !messageSearch && !subjects
+            tr 
+                td(colspan="6") No Data!
+    script.
+        function confirmDelete() {
+            if (confirm("Are you sure you want to delete this subject?")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
